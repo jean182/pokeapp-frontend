@@ -1,4 +1,4 @@
-import PokemonInfo from "../../components/pokemon-info";
+import PokemonInfo from "@components/pokemon-info";
 
 export default function PokemonPage() {
     return (

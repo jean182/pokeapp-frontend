@@ -1,5 +1,5 @@
+import '@styles/main.scss';
 import ReactDOM from 'react-dom';
-import './styles/main.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

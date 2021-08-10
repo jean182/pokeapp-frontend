@@ -1,4 +1,5 @@
-import { IPokemonListItem } from "../pokemon-list-item/pokemon-list-item.interfaces"
+import { IPokemonListItem } from "@components/pokemon-list-item/pokemon-list-item.interfaces"
+
 import { IPokemonListResponse, IPokemonType } from "./pokemon-list.interfaces"
 
 

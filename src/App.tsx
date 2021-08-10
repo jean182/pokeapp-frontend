@@ -1,6 +1,6 @@
 import { ApolloProvider } from '@apollo/client';
-import { client } from './gql';
-import Routes from './router';
+import { client } from '@gql';
+import Routes from '@router';
 
 function App() {
   return (

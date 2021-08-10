@@ -1,5 +1,5 @@
-import { PageTypes } from "../../hooks/use-pagination";
-import { usePagination } from "../../hooks";
+import { PageTypes } from "@hooks/use-pagination";
+import { usePagination } from "@hooks";
 import { IPagination } from "./pagination.interfaces";
 
 function arrow(type: PageTypes) {
@@ -13,11 +13,13 @@ function arrow(type: PageTypes) {
 export default function Pagination({
   current,
   onChange,
+  page,
   total,
 }: IPagination) {
   const { items } = usePagination({
     count: Math.ceil(total / current),
     onChange,
+    page
   });
 
   return (

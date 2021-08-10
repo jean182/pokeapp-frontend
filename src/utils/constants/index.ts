@@ -1,7 +1,7 @@
-import AboutPage from "../../pages/about";
-import HomePage from "../../pages/home";
-import PokedexPage from "../../pages/pokedex";
-import PokemonPage from "../../pages/pokemon";
+import AboutPage from "@pages/about";
+import HomePage from "@pages/home";
+import PokedexPage from "@pages/pokedex";
+import PokemonPage from "@pages/pokemon";
 
 export enum RouteNames {
     Home = "/",

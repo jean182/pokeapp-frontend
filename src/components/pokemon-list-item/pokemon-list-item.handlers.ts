@@ -1,4 +1,4 @@
-import { SPRITE_URL } from "../../utils/constants";
+import { SPRITE_URL } from "@utils/constants";
 
 export function humanize(str: string) {
     return str
