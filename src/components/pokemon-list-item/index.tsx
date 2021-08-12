@@ -1,3 +1,5 @@
+import Badge from "@components/badge";
+import { PokemonTypes } from "@utils/constants";
 import { Link } from "react-router-dom";
 
 import { humanize, imageUrlGenerator } from "./pokemon-list-item.handlers";
@@ -13,7 +15,16 @@ export default function PokemonListItem({
       <img src={imageUrlGenerator(id)} className="card-img-top" alt={name} />
       <div className="card-body">
         <h5 className="card-title">{humanize(name)}</h5>
-        <Link to={`/pokedex/${name}`} className="btn btn-primary">View More</Link>
+        <ul className="list-inline">
+          {types.map(({ id, name }) => (
+            <li key={id} className="list-inline-item">
+              <Badge name={name as PokemonTypes} />
+            </li>
+          ))}
+        </ul>
+        <div className="text-end">
+          <Link to={`/pokedex/${name}`} className="btn btn-primary">View More</Link>
+        </div>
       </div>
     </div>
   )
