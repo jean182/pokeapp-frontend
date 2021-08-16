@@ -1,8 +1,9 @@
 import React from "react";
-import { LoaderStyled } from "./loader.styled";
 
 const Loader = React.forwardRef<HTMLDivElement>((_props, ref) => (
-    <LoaderStyled ref={ref} />
+  <div className="spinner-border text-dark" role="status">
+    <span className="visually-hidden">Loading...</span>
+  </div>
 ));
 
 export default Loader

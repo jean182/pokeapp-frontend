@@ -5,21 +5,14 @@ import Loader from '@components/loader';
 import { DEFAULT_LIMIT, ZERO } from '@utils/constants';
 import { IPokemonListData, IPokemonListVars } from './pokemon-list.interfaces';
 import { transformData } from './pokemon-list.handlers';
-import Pagination from '@components/pagination';
-import PokemonListItem from '../pokemon-list-item';
-import { AppContext } from '@appcontext';
-import { setLastKnownPokedexPage } from '@appcontext/action-creators';
+import PokemonListItem from '@components/pokemon-list-item';
+import PokedexPlaceholder from '@components/initial-loader';
+import useInfiniteScroll from "react-infinite-scroll-hook";
 
 
-// WIP FIX pagination
 export default function PokemonList() {
-  const { dispatch, state: { lastKnownPokedexPage } } = React.useContext(AppContext)
-  console.log(lastKnownPokedexPage)
-  const [meta, setMeta] = React.useState({
-    pageNumber: lastKnownPokedexPage,
-    pageSize: DEFAULT_LIMIT,
-  });
-  const { loading, data, fetchMore } = useQuery<
+  const [currentOffset, setCurrentOffset] = React.useState(ZERO);
+  const { loading, data, error, fetchMore } = useQuery<
     IPokemonListData,
     IPokemonListVars
   >(
@@ -34,37 +27,34 @@ export default function PokemonList() {
   );
 
   const pokemonList = data?.pokemon.map(transformData) ?? []
-  const { pageNumber, pageSize } = meta;
+  const total = data?.pokemonCount.aggregate.count ?? 0
+  const hasNextPage = pokemonList.length < total
 
-  const onChangePage = async (_event: React.ChangeEvent<unknown>, page: number) => {
-    const { data: result } = await fetchMore({
+  const loadMore = async () => {
+    const offset = currentOffset + DEFAULT_LIMIT
+    await fetchMore({
       variables: {
-        offset: DEFAULT_LIMIT * (page - 1)
+        offset
       },
     })
-    dispatch(setLastKnownPokedexPage(page))
-    setMeta({
-      pageNumber: page,
-      pageSize: result.pokemon.length
-    });
+    setCurrentOffset(offset)
   };
 
-  const showPageResults = () => {
-    if (meta.pageNumber * DEFAULT_LIMIT > pokemonList.length) {
-      return [-pageSize]
-    }
+  const [sentryRef] = useInfiniteScroll({
+    loading,
+    hasNextPage,
+    onLoadMore: loadMore,
+    disabled: !!error,
+  });
 
-    return [(pageNumber - 1) * pageSize, pageNumber * pageSize]
-  }
-
-  if (loading) return <Loader />
+  if (loading && pokemonList.length === 0) return <PokedexPlaceholder />
 
   return (
     <>
       <h1>Pokemon List</h1>
       <div className="row">
-        {pokemonList.slice(...showPageResults()).map(({ id, name, types }) => (
-          <div className="col-3" key={id}>
+        {pokemonList.map(({ id, name, types }) => (
+          <div className="col-sm-3" key={id}>
             <PokemonListItem
               id={id}
               name={name}
@@ -72,14 +62,12 @@ export default function PokemonList() {
             />
           </div>
         ))}
-        <div className="py-3" />
-        <Pagination
-          current={DEFAULT_LIMIT * meta.pageNumber}
-          total={data?.pokemonCount.aggregate.count ?? 0}
-          onChange={onChangePage}
-          page={lastKnownPokedexPage}
-        />
       </div>
+      {(loading || hasNextPage) && (
+          <div className="text-center" ref={sentryRef}>
+            <Loader />
+          </div>
+        )}
     </>
   )
 }
