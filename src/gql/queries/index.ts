@@ -32,16 +32,19 @@ export const GET_POKEMON_BY_ID = gql`
       pokemonStats: pokemon_v2_pokemonstats {
         base_stat
         pokemonStat: pokemon_v2_stat {
+          id
           name
         }
       }
       pokemonAbilities: pokemon_v2_pokemonabilities {
-        pokemon_v2_ability {
+        pokemonAbility: pokemon_v2_ability {
+          id
           name
         }
       }
       pokemonTypes: pokemon_v2_pokemontypes {
-        pokemon_v2_type {
+        pokemonType: pokemon_v2_type {
+          id
           name
         }
       }

@@ -1,20 +1,29 @@
-export interface IPokemonAbility {
+interface BaseResponse {
+  __typename?: string;
+}
+
+export interface IPokemonAbility extends BaseResponse {
+  id: number;
   name: string;
 }
 
-// export interface IPokemonMove {
-//   name: string;
-// }
-
-export interface IPokemonStat {
+export interface IPokemonStat extends BaseResponse {
   base_stat: string;
   pokemonStat: {
+    id: number;
     name: string;
   };
 }
 
-export interface IPokemonType {
-  name: string;
+export interface IPokemonType extends BaseResponse {
+  pokemonType: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface IPokemonResponse extends BaseResponse {
+  pokemon: IPokemonData;
 }
 
 export interface IPokemonData {
@@ -23,13 +32,8 @@ export interface IPokemonData {
   name: string;
   weight: number;
   pokemonAbilities: IPokemonAbility[];
-  // pokemonMoves: IPokemonMove[];
   pokemonStats: IPokemonStat[];
   pokemonTypes: IPokemonType[];
-}
-
-export interface IPokemonResponse {
-  pokemon: IPokemonData;
 }
 
 export interface IPokemonVars {
