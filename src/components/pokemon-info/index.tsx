@@ -13,7 +13,6 @@ interface LocationState {
 
 export default function PokemonInfo() {
   const { state } = useLocation<LocationState>();
-
   const { loading, data } = useQuery<IPokemonResponse, IPokemonVars>(
     GET_POKEMON_BY_ID,
     {
@@ -26,10 +25,11 @@ export default function PokemonInfo() {
   if (loading) return <Loader />;
 
   const pokemon = data?.pokemon;
-  console.log(data);
+  console.log("Pokemon: ", pokemon);
+
   return pokemon ? (
     <div className="row">
-      <div className="card col">
+      <div className="col">
         <div className="card-body">
           <img
             className="card-img-top"
@@ -43,10 +43,11 @@ export default function PokemonInfo() {
           </p>
         </div>
       </div>
-      <div className="card col">
+      <div className="col">
         <div className="card-body">
           <h5 className="card-title">Pokedex index: {pokemon.id}</h5>
           <li className="card-text">Height: {pokemon.height}</li>
+          <li className="card-text">Weigth: {pokemon.weight}</li>
           <li className="card-text">Weigth: {pokemon.weight}</li>
         </div>
       </div>

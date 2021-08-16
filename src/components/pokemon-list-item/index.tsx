@@ -19,7 +19,10 @@ export default function PokemonListItem({ id, name, types }: IPokemonListItem) {
           ))}
         </ul>
         <div className="text-end">
-          <Link to={`/pokedex/${name}`} className="btn btn-primary">
+          <Link
+            to={{ pathname: `/pokedex/${name}`, state: { id } }}
+            className="btn btn-primary"
+          >
             View More
           </Link>
         </div>
