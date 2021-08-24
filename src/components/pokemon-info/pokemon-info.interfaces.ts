@@ -3,8 +3,10 @@ interface BaseResponse {
 }
 
 export interface IPokemonAbility extends BaseResponse {
-  id: number;
-  name: string;
+  pokemonAbility: {
+    id: number;
+    name: string;
+  }
 }
 
 export interface IPokemonStat extends BaseResponse {

@@ -27,7 +27,6 @@ export default function PokemonInfo() {
   if (loading) return <Loader />;
 
   const pokemon = data?.pokemon;
-  console.log("Pokemon: ", pokemon);
 
   return pokemon ? (
     <div className="row">
@@ -50,10 +49,6 @@ export default function PokemonInfo() {
               ))}
             </ul>
           </h5>
-          <p className="card-text">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </p>
         </div>
       </div>
       <div className="col">
@@ -63,22 +58,30 @@ export default function PokemonInfo() {
             <li className="card-text">Height: {pokemon.height}</li>
             <li className="card-text">Weigth: {pokemon.weight}</li>
           </ul>
-          <h5>Base Stats</h5>
-          <ol>
-            {pokemon.pokemonStats.map(({ pokemonStat, base_stat }) => (
-              <li key={pokemonStat.id} className="card-text">
-                {humanize(pokemonStat.name)}: {base_stat}
-              </li>
-            ))}
-          </ol>
-          <h5>Abilities</h5>
-          <ul>
-            {pokemon.pokemonAbilities.map(({ id, name }) => (
-              <li key={id} className="card-text">
-                {name}
-              </li>
-            ))}
-          </ul>
+          {pokemon.pokemonStats.length > 0 && (
+            <>
+              <h5>Base Stats</h5>
+              <ol>
+                {pokemon.pokemonStats.map(({ pokemonStat, base_stat }) => (
+                  <li key={pokemonStat.id} className="card-text">
+                    {humanize(pokemonStat.name)}: {base_stat}
+                  </li>
+                ))}
+              </ol>
+            </>
+          )}
+          {pokemon.pokemonAbilities.length > 0 && (
+            <>
+            <h5>Abilities</h5>
+              <ul>
+                {pokemon.pokemonAbilities.map(({pokemonAbility: {name, id}}) => (
+                    <li key={id} className="card-text">
+                      {humanize(name)}
+                    </li>
+                ))}
+              </ul>
+            </>
+          )}
         </div>
       </div>
     </div>

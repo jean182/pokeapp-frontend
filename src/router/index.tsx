@@ -3,11 +3,12 @@ import {
   Route,
 } from "react-router-dom";
 import { AppContext, initialState, reducer } from '@appcontext';
+import React from "react";
 import { CSSTransition } from "react-transition-group";
 
 import Header from "@components/header";
+import Footer from "@components/footer";
 import { ROUTES } from "@utils/constants";
-import React from "react";
 
 export default function Routes() {
   const [state, dispatch] = React.useReducer(reducer, initialState)
@@ -33,8 +34,9 @@ export default function Routes() {
                       </CSSTransition>
                     )}
                   </Route>
-                ))}
-              </div>
+              ))}
+            </div>
+            <Footer />
           </>
         </Router>
       </AppContext.Provider>
